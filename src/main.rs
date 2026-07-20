@@ -109,6 +109,9 @@ fn main() {
     // RAYON_NUM_THREADS=N if you want to leave headroom for NVMe queue depth
     // vs. CPU-bound SHA-256 (usually not necessary — SHA-NI is fast enough
     // that this becomes I/O-bound quickly).
+    //
+    // Perf testing on my system did not reveal any gains using more or less threads, 
+    // so we just use the default global pool. YMMV
     let mut results: Vec<ModelHash> = paths.par_iter().filter_map(|p| process(p)).collect();
 
     results.sort_by(|a, b| a.original_path.cmp(&b.original_path));
